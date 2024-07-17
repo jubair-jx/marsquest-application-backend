@@ -1,4 +1,4 @@
-# Flat Share Application
+# Mars-Visit-Application-Frontend
 
 This project is a Flat Share Application, To has a full pleged and Full Stack Dynamic Web App, built by with prisma(ORM), Express, and TypeScript, NextJs, TS, JS etc.. Validation with implement authentication system, Filtering , and CRUD Operations etc.
 
