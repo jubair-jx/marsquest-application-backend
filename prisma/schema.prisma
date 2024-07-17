@@ -1,0 +1,84 @@
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id String @id @default(uuid())
+  email String @unique
+  status UserStatus @default(ACTIVE)  
+  needPasswordChange Boolean @default(false)
+  password String
+  role UserRole
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  admin Admin?
+  profile UserProfile? 
+  @@map("users")
+}
+
+model Admin {
+  id String @id @default(uuid())
+  name String
+  username String @unique
+  email String @unique
+  contactNumber String?
+  isDeleted Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user Users @relation(references: [email], fields: [email])
+
+@@map("admins")
+}
+
+model Applicant {
+  id                Int      @id @default(autoincrement())
+  fullName          String
+  dateOfBirth       DateTime
+  nationality       String
+  email             String   @unique
+  phone             String
+  departureDate     DateTime
+  returnDate        DateTime
+  accommodation     String
+  specialRequests   String?
+  healthDeclaration Boolean
+  emergencyContact  String
+  medicalConditions String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+}
+
+model UserProfile {
+  id String @id @default(uuid())
+  bio String?
+  user Users @relation(fields: [id], references: [id])
+  profession String?
+  address String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@map("user_profiles")
+}
+
+enum Status {
+  PENDING
+  BOOKED
+  REJECTED
+}
+
+enum UserRole {
+  ADMIN
+}
+enum UserStatus {
+  ACTIVE
+  BLOCKED
+  DELETED
+}
