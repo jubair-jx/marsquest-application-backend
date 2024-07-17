@@ -21,7 +21,7 @@ const moduleRoutes = [
     route: authRoutes,
   },
   {
-    path: "/create-applicant",
+    path: "/applicant",
     route: applicantRoutes,
   },
 

@@ -10,7 +10,7 @@ const app: Application = express();
 // CORS configuration
 app.use(
   cors({
-    origin: ["https://flat-hive-app.vercel.app", "http://localhost:3000"],
+    origin: ["http://localhost:3000"],
     credentials: true,
   })
 );
@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Root route
 app.get("/", (req: Request, res: Response) => {
-  res.send({ message: "Flat Sharing Server is running now" });
+  res.send({ message: "Mars App Server is running now" });
 });
 
 // Main API endpoint

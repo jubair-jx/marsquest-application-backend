@@ -8,7 +8,7 @@ import verifyToken from "../../../helpers/verifyToken";
 import prisma from "../../../shared/prisma";
 import { TLogin } from "./auth.interface";
 const loginIntoDB = async (payload: TLogin) => {
-  let isExistUser : any;
+  let isExistUser: any;
 
   if (payload.email) {
     // Check if the user exists in the Users table via email
@@ -24,12 +24,7 @@ const loginIntoDB = async (payload: TLogin) => {
       where: { email: payload.email },
     });
 
-    const normalUser = await prisma.normalUser.findUnique({
-      where: { email: payload.email },
-    });
-
     isExistUser = adminUser ? { ...isExistUser, ...adminUser } : isExistUser;
-    isExistUser = normalUser ? { ...isExistUser, ...normalUser } : isExistUser;
   } else if (payload.username) {
     // Check if the user exists in the Admin or normalUser table via username
     let adminUser, normalUser;
@@ -39,16 +34,7 @@ const loginIntoDB = async (payload: TLogin) => {
         where: { username: payload.username },
         include: { user: true },
       });
-    } catch (e:any) {
-      if (e.code !== "P2025") throw e;
-    }
-
-    try {
-      normalUser = await prisma.normalUser.findUniqueOrThrow({
-        where: { username: payload.username },
-        include: { user: true },
-      });
-    } catch (e:any) {
+    } catch (e: any) {
       if (e.code !== "P2025") throw e;
     }
 
@@ -60,7 +46,6 @@ const loginIntoDB = async (payload: TLogin) => {
     }
 
     isExistUser = adminUser ? adminUser.user : isExistUser;
-    isExistUser = normalUser ? normalUser.user : isExistUser;
   } else {
     throw new AppError(
       httpStatus.BAD_REQUEST,
