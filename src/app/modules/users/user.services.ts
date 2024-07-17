@@ -3,8 +3,7 @@ import * as bcrypt from "bcrypt";
 import { helperFunction } from "../../../helpers/calculate.pagination";
 import { TpaginationItems } from "../../../interface/pagination.interface";
 import prisma from "../../../shared/prisma";
-import { updateAdminUserInfo } from "../Admin/admin.interface";
-import { updateNormalUserInfo } from "../NormalUser/normal.interface";
+
 import { userSearchAbleFields } from "./user.constant";
 type TInputData = {
   name: string;
@@ -53,42 +52,7 @@ const createAdminIntoDB = async (body: any) => {
   return result;
 };
 
-const createUserIntoDB = async (body: any) => {
-  const hashPassword = await bcrypt.hash(body.password, 12);
-  const userData = {
-    email: body.user.email,
-    password: hashPassword,
-    role: UserRole.USER,
-  };
-  const normalUserData = {
-    name: body.user.name,
-    username: body.user.username,
-    email: body.user.email,
-    contactNumber: body.user.contactNumber,
-  };
-  const result = await prisma.$transaction(async (tx) => {
-    const createUser = await tx.users.create({
-      data: userData,
-    });
-    const createNormalUser = await tx.normalUser.create({
-      data: normalUserData,
-    });
-    const createUserProfile = await tx.userProfile.create({
-      data: {
-        user: {
-          connect: {
-            id: createUser.id,
-          },
-        },
-        bio: body.user.bio,
-        profession: body.user.profession,
-        address: body.user.address,
-      },
-    });
-    return createNormalUser;
-  });
-  return result;
-};
+const createUserIntoDB = async (body: any) => {};
 
 const getAllUserFromDB = async (params: any, options: TpaginationItems) => {
   const { searchTerm, ...filterData } = params;
@@ -144,7 +108,7 @@ const getAllUserFromDB = async (params: any, options: TpaginationItems) => {
       createdAt: true,
       updatedAt: true,
       admin: true,
-      normalUser: true,
+
       profile: true,
     },
   });
@@ -163,68 +127,6 @@ const getAllUserFromDB = async (params: any, options: TpaginationItems) => {
   };
 };
 
-const getAllNormalUsersFromDB = async () => {
-  const result = await prisma.normalUser.findMany({
-    include: {
-      user: true,
-    },
-  });
-
-  return result;
-};
-const updateNormaUserInfoDataById = async (
-  id: string,
-  data: updateNormalUserInfo
-) => {
-  const isExistData = await prisma.normalUser.findUniqueOrThrow({
-    where: {
-      id,
-      isDeleted: false,
-    },
-  });
-
-  const isUserExist = await prisma.users.findFirstOrThrow({
-    where: {
-      normalUser: {
-        id: isExistData.id,
-      },
-    },
-  });
-
-  const result = await prisma.users.update({
-    where: {
-      id: isUserExist?.id,
-    },
-    data: {
-      status: data?.status,
-      role: data?.role,
-    },
-    select: {
-      id: true,
-      email: true,
-      status: true,
-      needPasswordChange: true,
-      role: true,
-      createdAt: true,
-      updatedAt: true,
-    },
-  });
-  return result;
-};
-
-const getUserByIdFromDB = async (id: string) => {
-  const getUser = await prisma.users.findUniqueOrThrow({
-    where: {
-      id,
-    },
-    include: {
-      normalUser: true,
-      admin: true,
-    },
-  });
-  return getUser;
-};
-
 const getAllAdminFromDB = async () => {
   const result = await prisma.admin.findMany({
     where: {
@@ -240,52 +142,11 @@ const getAllAdminFromDB = async () => {
 
   return result;
 };
-const updateAdminInfoDataById = async (
-  id: string,
-  data: updateAdminUserInfo
-) => {
-  const isExistData = await prisma.admin.findUniqueOrThrow({
-    where: {
-      id,
-      isDeleted: false,
-    },
-  });
 
-  const isUserExist = await prisma.users.findFirstOrThrow({
-    where: {
-      admin: {
-        id: isExistData.id,
-      },
-    },
-  });
-
-  const result = await prisma.users.update({
-    where: {
-      id: isUserExist?.id,
-    },
-    data: {
-      status: data?.status,
-      role: data?.role,
-    },
-    select: {
-      id: true,
-      email: true,
-      status: true,
-      needPasswordChange: true,
-      role: true,
-      createdAt: true,
-      updatedAt: true,
-    },
-  });
-  return result;
-};
 export const userServices = {
   createUserIntoDB,
   createAdminIntoDB,
   getAllUserFromDB,
-  getAllNormalUsersFromDB,
-  updateNormaUserInfoDataById,
+
   getAllAdminFromDB,
-  getUserByIdFromDB,
-  updateAdminInfoDataById,
 };

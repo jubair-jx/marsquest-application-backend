@@ -13,6 +13,4 @@ userRoutes.post(
 
 //Modifed the get all user endpoint
 
-userRoutes.get("/:id", userControllers.getUserById);
-
 export default userRoutes;

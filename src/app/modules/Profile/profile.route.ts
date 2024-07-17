@@ -5,20 +5,6 @@ import { profileControllers } from "./profile.controller";
 
 const profileRoutes = Router();
 
-profileRoutes.get(
-  "/",
-  auth(UserRole.ADMIN, UserRole.SUPER_ADMIN),
-  profileControllers.getAllProfiles
-);
-profileRoutes.put(
-  "/update-info",
-  auth(UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.USER),
-  profileControllers.updateUserProfile
-);
-profileRoutes.get(
-  "/get-my-profile",
-  auth(UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.USER),
-  profileControllers.getMyUserProfile
-);
+profileRoutes.get("/", auth(UserRole.ADMIN), profileControllers.getAllProfiles);
 
 export default profileRoutes;
