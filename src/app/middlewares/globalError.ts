@@ -22,7 +22,8 @@ const globalErrorHandelar = (
     statusCode = err.statusCode;
     message = err.message;
   }
-  if (err?.code === 11000) {
+  console.log(err.meta.target[0]);
+  if (err?.code === "P2002") {
     const duplicateError = handleDuplicateError(err);
     statusCode = duplicateError.statusCode;
     message = duplicateError.message;
