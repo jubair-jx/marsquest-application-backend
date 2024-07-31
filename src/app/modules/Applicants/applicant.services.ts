@@ -60,3 +60,11 @@ export const getAllApplicants = async () => {
   const result = await prisma.applicant.findMany();
   return result;
 };
+export const getApplicantFromDB = async (id: number) => {
+  const result = await prisma.applicant.findUniqueOrThrow({
+    where: {
+      id,
+    },
+  });
+  return result;
+};

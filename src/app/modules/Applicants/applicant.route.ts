@@ -15,6 +15,11 @@ applicantRoutes.post(
 applicantRoutes.get(
   "/",
   auth(UserRole.ADMIN),
+  ApplicationController.getApplicants
+);
+applicantRoutes.get(
+  "/:id",
+  auth(UserRole.ADMIN),
   ApplicationController.getApplicant
 );
 

@@ -68,11 +68,6 @@ model UserProfile {
   @@map("user_profiles")
 }
 
-enum Status {
-  PENDING
-  BOOKED
-  REJECTED
-}
 
 enum UserRole {
   ADMIN
