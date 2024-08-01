@@ -44,6 +44,21 @@ MarQuest Application/
 
 ## Getting Started
 
+## Admin Credentials
+
+```typescript
+`For Dashboard Testing purpose`
+{
+    "email": "jubair.jx1@mail.com",
+    "password": "123456"
+}
+or
+{
+    "email": "jubair.jx@mail.com",
+    "password": "123456"
+}
+```
+
 ### Run Project In your Local Machine
 
 ## For Backend Checking Tips
@@ -87,7 +102,3 @@ npm run build
 ### Frontend URL :
 
 https://marquest.vercel.app/
-
-#### Video URL Link:
-
-https://drive.google.com/file/d/1bRe1aUitPgbJsYAJrrWK57uckMu-oHM4/view?usp=sharing
