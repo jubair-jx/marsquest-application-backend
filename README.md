@@ -1,6 +1,6 @@
 # MarQuest Application
 
-This application helps streamline the selection process for potential Mars enthusists. Applicants navigate through three stages, providing essential information about themselves, travel preferences, and health conditions. Data validation ensures accurate and complete submissions.
+This application helps streamline the selection process for potential Mars enthusists. Applicants navigate through three stages, providing essential information about themselves, travel preferences, and health conditions. Data validation ensures accurate, all of data will persist on Browser Local-Stoarge and complete submissions.
 
 ## Prerequisites
 
@@ -23,6 +23,25 @@ Before you begin, ensure you have the following installed:
 - Axios
 - Material UI
 - Animation
+- ETC....
+
+## Technology Used This Project
+
+- TypeScript
+- Nextjs
+- Prisma
+- Browser Local-Stoarge
+- Cors
+- Validation Packages
+- Zod
+- ExpressJS
+- Redux
+- Axios
+- Tailwindcss
+- Postgresql
+- Axios
+- Material UI
+- Framer Motion
 - ETC....
 
 ### File Path
